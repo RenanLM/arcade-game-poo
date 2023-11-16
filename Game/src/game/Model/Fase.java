@@ -3,11 +3,15 @@ package game.Model;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.security.PublicKey;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.swing.Timer;
 
 import javax.swing.ImageIcon;
@@ -27,6 +31,10 @@ public class Fase extends JPanel implements ActionListener{
 		ImageIcon ref = new ImageIcon("src//res//background.jpg");
 		background = ref.getImage();
 		
+		int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+        int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+        background = background.getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT);
+		
 		player = new Player();
 		player.load();
 		
@@ -40,12 +48,30 @@ public class Fase extends JPanel implements ActionListener{
 		Graphics2D graficos = (Graphics2D) g;
 		graficos.drawImage(background, 0, 0, null);
 		graficos.drawImage(player.getImagem(), player.getX(), player.getY(), this);
+		
+		List<Tiro> tiros = player.getTiros();
+		for (int i = 0; i < tiros.size(); i++) {
+			Tiro m = tiros.get(i);
+			m.load();
+			graficos.drawImage(m.getImagem(),m.getX(),m.getY(),this);
+		}
+		
 		g.dispose();
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		player.update();
+		
+		List<Tiro> tiros = player.getTiros();
+		for (int i = 0; i < tiros.size(); i++) {
+			Tiro m = tiros.get(i);
+			if(m.isVisible())
+				m.update();
+			else
+				tiros.remove(i);			
+		}
+		
 		repaint();
 	}
 	

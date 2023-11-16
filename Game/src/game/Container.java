@@ -1,6 +1,7 @@
 package game;
 
 import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
 
 import game.Model.Fase;
 
@@ -12,8 +13,8 @@ public class Container extends JFrame{
 	public Container() {
 		
 		add(new Fase());
-		setTitle("Is that a gay pride flag?"); //Titulo da janela
-		setSize(1366,768); // Tamanho da janela
+		setTitle("SDUR"); //Titulo da janela
+		setExtendedState(JFrame.MAXIMIZED_BOTH); // Tamanho da janela
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Parar o programa qnd fechar a janela
 		setLocationRelativeTo(null); // Carregar a tela no centro
 		this.setResizable(false); // Travar a tela na resolucao padrao
@@ -21,7 +22,7 @@ public class Container extends JFrame{
 	}
 	
 	public static void main(String[] args) {
-		new Container();
+		SwingUtilities.invokeLater(() -> new Container());
 	}
 	
 }
