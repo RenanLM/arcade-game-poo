@@ -51,7 +51,7 @@ public class Player {
 		if(cod == KeyEvent.VK_DOWN) // Pra baixo
 			dy = 3;
 		
-		if(cod == KeyEvent.VK_RIGHT) //Pra direita
+		if(cod == KeyEvent.VK_D) //Pra direita
 			dx = 3;
 		
 		if(cod == KeyEvent.VK_LEFT) //Pra esquerda
