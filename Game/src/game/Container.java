@@ -1,7 +1,6 @@
 package game;
 
 import java.awt.Image;
-
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -22,9 +21,8 @@ public class Container extends JFrame{
 		setLocationRelativeTo(null); // Carregar a tela no centro
 		this.setResizable(false); // Travar a tela na resolucao padrao
 		setVisible(true);
-		//ImageIcon icon = new ImageIcon("src//res//spacenave1");
-		//setIconImage(icon.getImage());
-		//tentei setar um iconezinho pro jogo mas não tá funcionando
+		ImageIcon icon = new ImageIcon("src//res//spacenave1.png");
+		setIconImage(icon.getImage());
 	}
 	
 	public static void main(String[] args) {

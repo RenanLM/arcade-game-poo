@@ -42,35 +42,35 @@ public class Player {
 	public void teclaPress(KeyEvent tecla){
 		int cod = tecla.getKeyCode();
 		
-		if(cod == KeyEvent.VK_A) // Atirar
+		if(cod == KeyEvent.VK_SPACE) // Atirar
 			tiroSimples();
 		
-		if(cod == KeyEvent.VK_UP) // Pra cima
+		if(cod == KeyEvent.VK_W) // Pra cima
 			dy = -3;
 		
-		if(cod == KeyEvent.VK_DOWN) // Pra baixo
+		if(cod == KeyEvent.VK_S) // Pra baixo
 			dy = 3;
 		
 		if(cod == KeyEvent.VK_D) //Pra direita
 			dx = 3;
 		
-		if(cod == KeyEvent.VK_LEFT) //Pra esquerda
+		if(cod == KeyEvent.VK_A) //Pra esquerda
 			dx = -3;
 	}
 	
 	public void teclaSolta(KeyEvent tecla){
 		int cod = tecla.getKeyCode();
 		
-		if(cod == KeyEvent.VK_UP)
+		if(cod == KeyEvent.VK_W)
 			dy = 0;
 		
-		if(cod == KeyEvent.VK_DOWN)
+		if(cod == KeyEvent.VK_S)
 			dy = 0;
 		
-		if(cod == KeyEvent.VK_RIGHT)
+		if(cod == KeyEvent.VK_D)
 			dx = 0;
 		
-		if(cod == KeyEvent.VK_LEFT)
+		if(cod == KeyEvent.VK_A)
 			dx = 0;
 	}
 
