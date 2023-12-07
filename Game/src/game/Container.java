@@ -16,7 +16,8 @@ public class Container extends JFrame{
 		
 		add(new Fase());
 		setTitle("SDUR"); //Titulo da janela
-		setExtendedState(JFrame.MAXIMIZED_BOTH); // Tamanho da janela
+		//setExtendedState(JFrame.MAXIMIZED_BOTH); // Tamanho da janela
+		setSize(1024,728);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Parar o programa qnd fechar a janela
 		setLocationRelativeTo(null); // Carregar a tela no centro
 		this.setResizable(false); // Travar a tela na resolucao padrao

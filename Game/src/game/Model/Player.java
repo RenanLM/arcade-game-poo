@@ -1,6 +1,7 @@
 package game.Model;
 
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,12 @@ public class Player {
 	private Image imagem;
 	private int altura, largura;
 	private List <Tiro> tiros;
+	private boolean isVisivel;
 	
 	public Player() {
 		this.x = 100;
 		this.y = 100;
-		
+		isVisivel = true;
 		tiros = new ArrayList<Tiro>();
 	}
 	
@@ -33,6 +35,10 @@ public class Player {
 	public void update() {
 		x += dx;
 		y += dy;
+	}
+	
+	public Rectangle getBounds() {
+		return new Rectangle(x, y, largura, altura);
 	}
 	
 	public void tiroSimples() {
@@ -89,6 +95,15 @@ public class Player {
 	public List<Tiro> getTiros() {
 		return tiros;
 	}
+
+	public boolean isVisivel() {
+		return isVisivel;
+	}
+
+	public void setVisivel(boolean isVisivel) {
+		this.isVisivel = isVisivel;
+	}
+	
 	
 	
 	
