@@ -98,6 +98,7 @@ public class Fase extends JPanel implements ActionListener{
 		}else {
 			ImageIcon fimjogo = new ImageIcon("src//res//gameover.png");
 			graficos.drawImage(fimjogo.getImage(), 0, 0, null);
+			//Tela.telaAtual = 2;
 		}
 		
 		

@@ -1,33 +1,49 @@
 package game;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
+import game.Model.Tela;
+import game.Model.TelaFase;
+import game.Model.TelaGameover;
+import game.Model.TelaMenu;
 
-import game.Model.Fase;
-
-public class Container extends JFrame{
-	
-
-	//private static final long serialVersionUID = 1L;
-
-	public Container() {
-		
-		add(new Fase());
-		setTitle("SDUR"); //Titulo da janela
-		//setExtendedState(JFrame.MAXIMIZED_BOTH); // Tamanho da janela
-		setSize(1024,728);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Parar o programa qnd fechar a janela
-		setLocationRelativeTo(null); // Carregar a tela no centro
-		this.setResizable(false); // Travar a tela na resolucao padrao
-		setVisible(true);
-		ImageIcon icon = new ImageIcon("src//res//spacenave1.png");
-		setIconImage(icon.getImage());
-	}
+public class Container{
+	public static Tela arrTelas[];
 	
 	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new Container());
+		arrTelas = new Tela[] {
+				new TelaMenu(), new TelaFase(), new TelaGameover()
+		};
+		
+		while(Tela.telaAtual != -1) {
+            System.out.print("");
+        	int j = verificarTelaAtividada();
+            if (j != Tela.telaAtual) {
+                trocarTela(j, Tela.telaAtual);
+            }
+        }
+
+    }
+
+    public static void trocarTela(int k, int i) { 
+    	if(Tela.telaAtual >= 0)
+    		arrTelas[i].setVisible(true);
+    	
+    	if (k >= 0)
+            arrTelas[k].setVisible(false);
+
+        
+    }
+
+    public static int verificarTelaAtividada() {
+        int j = -1;
+
+        for (int i = 0; i < arrTelas.length; i++) {
+        	
+            if (arrTelas[i].isVisible() == true) {
+                j = i;
+                break;
+            }
+        }
+
+        return j;
 	}
-	
 }
