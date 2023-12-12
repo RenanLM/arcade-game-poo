@@ -34,6 +34,7 @@ public class Fase extends JPanel implements ActionListener{
 	private List<Enemy1> enemy1;
 	private boolean inJogo;
 	private int inimigosAbatidos = 0;
+	private int maiorRecorde = 0;
 	
 	public Fase() {
 		
@@ -115,8 +116,6 @@ public class Fase extends JPanel implements ActionListener{
 		    graficos.setFont(minhaFonte);
 			graficos.setColor(Color.WHITE);
 			graficos.drawString("Inimigos Abatidos: " + inimigosAbatidos, 10, 20);
-			
-			
 
 		}else {
 			
@@ -160,21 +159,6 @@ public class Fase extends JPanel implements ActionListener{
 		Rectangle enemy1Form;
 		Rectangle tiroForm;
 		
-		/*for (int k = 0; k < enemy1.size(); k++) {
-			Enemy1 tempEnemy1 = enemy1.get(k);
-			enemy1Form = tempEnemy1.getBounds();
-			if(naveForm.intersects(enemy1Form)) {
-				player.setVisivel(false);
-				tempEnemy1.setVisible(false);
-				inJogo = false;
-				inimigosAbatidos++;
-				if (exploSound != null) {
-					exploSound.stop();
-			        exploSound.setFramePosition(0); 
-			        exploSound.start();  
-			    }
-			}	
-		}*/
 		
 		boolean colisaoDetectada = false;
 

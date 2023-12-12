@@ -31,8 +31,6 @@ public class Enemy1 {
 	public void update() {
 		this.x -= VELOCIDADE;
 		
-		/*if(this.x > ALCANCE)
-			isVisible = false;*/
 	}
 	
 	public Rectangle getBounds() {
