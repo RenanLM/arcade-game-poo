@@ -12,12 +12,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.PrintWriter;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Scanner;
+import game.Model.TelaMenu;
 import javax.swing.Timer;
+import javax.lang.model.element.RecordComponentElement;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -34,7 +37,35 @@ public class Fase extends JPanel implements ActionListener{
 	private List<Enemy1> enemy1;
 	private boolean inJogo;
 	private int inimigosAbatidos = 0;
-	private int maiorRecorde = 0;
+	private int recorde = 0;
+	private static final String MAIOR_RECORDE = "recorde.txt";
+	
+	private void carregarRecorde() {
+	    try {
+	        File arquivo = new File(MAIOR_RECORDE);
+
+	        if (arquivo.exists()) {
+	            Scanner scanner = new Scanner(arquivo);
+	            if (scanner.hasNextInt()) {
+	                recorde = scanner.nextInt();
+	            }
+	            scanner.close();
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
+
+	private void salvarRecorde() {
+	    try {
+	        File arquivo = new File(MAIOR_RECORDE);
+	        PrintWriter writer = new PrintWriter(arquivo);
+	        writer.print(recorde);
+	        writer.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	}
 	
 	public Fase() {
 		
@@ -63,6 +94,7 @@ public class Fase extends JPanel implements ActionListener{
 		
 		inicializaInimigos();
 		
+		carregarRecorde();		
 		try {
             File soundFile = new File("src//res//explosao.wav");
             AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
@@ -78,7 +110,7 @@ public class Fase extends JPanel implements ActionListener{
 	public void inicializaInimigos() {
 		
 		
-		int coordenadas [] = new int[40];
+		int coordenadas [] = new int[100];
 		enemy1 = new ArrayList<Enemy1>();
 		
 		for (int i = 0; i < coordenadas.length; i++) {
@@ -95,6 +127,7 @@ public class Fase extends JPanel implements ActionListener{
 		Graphics2D graficos = (Graphics2D) g;
 		
 		if(inJogo){
+			
 			graficos.drawImage(background, 0, 0, null);
 			graficos.drawImage(player.getImagem(), player.getX(), player.getY(), this);
 			
@@ -116,6 +149,7 @@ public class Fase extends JPanel implements ActionListener{
 		    graficos.setFont(minhaFonte);
 			graficos.setColor(Color.WHITE);
 			graficos.drawString("Inimigos Abatidos: " + inimigosAbatidos, 10, 20);
+			graficos.drawString("Recorde: " + recorde, 10, 40);
 
 		}else {
 			
@@ -202,6 +236,11 @@ public class Fase extends JPanel implements ActionListener{
 						tempEnemy1.setVELOCIDADE(1);
 				}
 			}
+			
+			if (inimigosAbatidos > recorde) {
+		        recorde = inimigosAbatidos;
+		        salvarRecorde();
+		    }
 		}
 		
 	}

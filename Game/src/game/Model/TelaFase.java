@@ -9,7 +9,6 @@ import game.Model.Fase;
 
 public class TelaFase extends Tela{
 	
-
 	//private static final long serialVersionUID = 1L;
 
 	public TelaFase() {

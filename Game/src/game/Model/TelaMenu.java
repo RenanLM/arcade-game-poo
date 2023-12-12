@@ -1,18 +1,25 @@
 
 package game.Model;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 public class TelaMenu extends Tela {
 
     private JButton startButton;
     private JButton quitButton;
     private Image fundo;
+    private Clip trilha;
+    
+    
 
     public TelaMenu() {
         
@@ -49,6 +56,7 @@ public class TelaMenu extends Tela {
         });
 
         carregarRecursos();
+
     }
 
     private void carregarRecursos() {
@@ -58,6 +66,30 @@ public class TelaMenu extends Tela {
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
         fundo = fundo.getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT);
+        
+        try {
+            File soundFile = new File("src//res//trilha.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            trilha = AudioSystem.getClip();
+            trilha.open(audioIn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void iniciarMusica() {
+        
+        if (trilha != null) {
+            trilha.loop(trilha.LOOP_CONTINUOUSLY);
+            trilha.start();
+        }
+    }
+    
+    public void pararMusica() {
+        
+        if (trilha != null && trilha.isRunning()) {
+            trilha.stop();
+        }
     }
 
     @Override
@@ -71,6 +103,8 @@ public class TelaMenu extends Tela {
         int y = getHeight() / 4;
         g.drawString(mensagem, x, y);
     }
+    
+    
     
 }
 

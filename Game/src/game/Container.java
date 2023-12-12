@@ -1,5 +1,7 @@
 package game;
 
+import java.awt.EventQueue;
+
 import game.Model.Tela;
 import game.Model.TelaFase;
 import game.Model.TelaGameover;
@@ -13,23 +15,24 @@ public class Container{
 				new TelaMenu(), new TelaFase(), new TelaGameover()
 		};
 		
-		while(Tela.telaAtual != -1) {
-            System.out.print("");
-        	int j = verificarTelaAtividada();
-            if (j != Tela.telaAtual) {
-                trocarTela(j, Tela.telaAtual);
-            }
-        }
+			while(Tela.telaAtual != -1) {
+				System.out.print("");
+				int j = verificarTelaAtividada();
+				if (j != Tela.telaAtual) {
+					trocarTela(j, Tela.telaAtual);
+				}
+			}
 
     }
 
     public static void trocarTela(int k, int i) { 
+   
     	if(Tela.telaAtual >= 0)
     		arrTelas[i].setVisible(true);
     	
     	if (k >= 0)
             arrTelas[k].setVisible(false);
-
+    	
         
     }
 
