@@ -87,6 +87,7 @@ public class Fase extends JPanel implements ActionListener{
 		player = new Player();
 		player.load();
 		
+		
 		addKeyListener(new TecladoAdapter());
 		
 		timer = new Timer(5, this);
@@ -110,7 +111,7 @@ public class Fase extends JPanel implements ActionListener{
 	public void inicializaInimigos() {
 		
 		
-		int coordenadas [] = new int[100];
+		int coordenadas [] = new int[250];
 		enemy1 = new ArrayList<Enemy1>();
 		
 		for (int i = 0; i < coordenadas.length; i++) {
@@ -130,6 +131,7 @@ public class Fase extends JPanel implements ActionListener{
 			
 			graficos.drawImage(background, 0, 0, null);
 			graficos.drawImage(player.getImagem(), player.getX(), player.getY(), this);
+
 			
 			List<Tiro> tiros = player.getTiros();
 			for (int i = 0; i < tiros.size(); i++) {
@@ -140,7 +142,7 @@ public class Fase extends JPanel implements ActionListener{
 			
 			for (int k = 0; k < enemy1.size(); k++) {
 			    Enemy1 in = enemy1.get(k);
-			    System.out.println("Inimigo " + k + ": x = " + in.getX() + ", y = " + in.getY());  // Checando as posicoes dos inimigos
+			    System.out.println("Inimigo " + k + ": x = " + in.getX() + ", y = " + in.getY());
 			    in.load();
 			    graficos.drawImage(in.getImagem(), in.getX(), in.getY(), this);
 			}
@@ -218,6 +220,7 @@ public class Fase extends JPanel implements ActionListener{
 		            colisaoDetectada = true;
 		        }
 		    }
+		    
 		}
 		
 		List<Tiro> tiros = player.getTiros();
@@ -242,6 +245,7 @@ public class Fase extends JPanel implements ActionListener{
 		        salvarRecorde();
 		    }
 		}
+		
 		
 	}
 	
