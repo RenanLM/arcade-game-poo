@@ -1,6 +1,7 @@
 package game.Model;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -10,19 +11,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.Timer;
-
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Fase extends JPanel implements ActionListener{
 	
+	private Clip exploSound;
 	private Image background;
+	private Image fimjogo;
 	private Player player;
 	private Timer timer;
 	private List<Enemy1> enemy1;
@@ -37,10 +43,15 @@ public class Fase extends JPanel implements ActionListener{
 		ImageIcon ref = new ImageIcon("src//res//background.jpg");
 		background = ref.getImage();
 		
+		ImageIcon ref2 = new ImageIcon("src//res//gameover-removebg-preview.png");
+		fimjogo = ref2.getImage();
+		
+		
 		int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
         background = background.getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT);
-		
+        fimjogo = fimjogo.getScaledInstance(screenWidth, screenHeight, Image.SCALE_DEFAULT);
+        
 		player = new Player();
 		player.load();
 		
@@ -51,13 +62,20 @@ public class Fase extends JPanel implements ActionListener{
 		
 		inicializaInimigos();
 		
+		try {
+            File soundFile = new File("src//res//explosao.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            exploSound = AudioSystem.getClip();
+            exploSound.open(audioIn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		
 		inJogo = true;
 	}
 	
 	public void inicializaInimigos() {
 		
-		int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-        int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 		
 		int coordenadas [] = new int[40];
 		enemy1 = new ArrayList<Enemy1>();
@@ -93,11 +111,16 @@ public class Fase extends JPanel implements ActionListener{
 			    graficos.drawImage(in.getImagem(), in.getX(), in.getY(), this);
 			}
 			
+			Font minhaFonte = new Font("Impact", Font.PLAIN, 16);
+		    graficos.setFont(minhaFonte);
+			graficos.setColor(Color.WHITE);
 			graficos.drawString("Inimigos Abatidos: " + inimigosAbatidos, 10, 20);
+			
+			
 
 		}else {
-			ImageIcon fimjogo = new ImageIcon("src//res//gameover.png");
-			graficos.drawImage(fimjogo.getImage(), 0, 0, null);
+			
+			graficos.drawImage(fimjogo, 0, 0, null);
 			//Tela.telaAtual = 2;
 		}
 		
@@ -137,7 +160,7 @@ public class Fase extends JPanel implements ActionListener{
 		Rectangle enemy1Form;
 		Rectangle tiroForm;
 		
-		for (int k = 0; k < enemy1.size(); k++) {
+		/*for (int k = 0; k < enemy1.size(); k++) {
 			Enemy1 tempEnemy1 = enemy1.get(k);
 			enemy1Form = tempEnemy1.getBounds();
 			if(naveForm.intersects(enemy1Form)) {
@@ -145,7 +168,38 @@ public class Fase extends JPanel implements ActionListener{
 				tempEnemy1.setVisible(false);
 				inJogo = false;
 				inimigosAbatidos++;
+				if (exploSound != null) {
+					exploSound.stop();
+			        exploSound.setFramePosition(0); 
+			        exploSound.start();  
+			    }
 			}	
+		}*/
+		
+		boolean colisaoDetectada = false;
+
+		for (int k = 0; k < enemy1.size(); k++) {
+		    Enemy1 tempEnemy1 = enemy1.get(k);
+		    enemy1Form = tempEnemy1.getBounds();
+		    
+		    if (naveForm.intersects(enemy1Form)) {
+		        if (!colisaoDetectada) {
+		            player.setVisivel(false);
+		            tempEnemy1.setVisible(false);
+		            inJogo = false;
+		            inimigosAbatidos++;
+
+		            if (exploSound != null) {
+		                if (!exploSound.isRunning()) {
+		                    exploSound.stop();
+		                    exploSound.setFramePosition(0);
+		                    exploSound.start();
+		                }
+		            }
+
+		            colisaoDetectada = true;
+		        }
+		    }
 		}
 		
 		List<Tiro> tiros = player.getTiros();
@@ -159,6 +213,9 @@ public class Fase extends JPanel implements ActionListener{
 					tempEnemy1.setVisible(false);
 					tempTiro.setVisible(false);
 					inimigosAbatidos++;
+					
+					if(inimigosAbatidos % 25 == 0)
+						tempEnemy1.setVELOCIDADE(1);
 				}
 			}
 		}

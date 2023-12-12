@@ -1,6 +1,7 @@
 package game.Model;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
 
@@ -10,7 +11,7 @@ public class TelaGameover extends Tela{
 	private Image fundo;
 	
 	public TelaGameover() {
-		ImageIcon ref = new ImageIcon("src//res//gameover.jpg");
+		ImageIcon ref = new ImageIcon("src//res//gameover-removebg-preview.png");
 		Image fundo = ref.getImage();
 		
 		int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
@@ -20,7 +21,11 @@ public class TelaGameover extends Tela{
 	}
 	
 	public void paint(Graphics g) {
-		super.paint(g);
-		g.drawImage(fundo, 0, 0, null);
+		
+		Graphics2D graficos = (Graphics2D) g;
+		
+		graficos.drawImage(fundo, 0, 0, null);
+		
+		g.dispose();
 	}
 }

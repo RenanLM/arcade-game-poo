@@ -12,7 +12,7 @@ public class Tiro {
 	private int largura, altura;
 	private boolean isVisible;
 	
-	private static final int ALCANCE = 1000;
+	private static final int ALCANCE = 1366;
 	private static int VELOCIDADE = 7	;
 	
 	public Tiro(int x, int y) {

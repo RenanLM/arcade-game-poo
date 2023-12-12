@@ -2,14 +2,21 @@ package game.Model;
 
 import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 
 public class Player {
 	
+	private Clip tiroSound;
 	private int x, y;
 	private int dx, dy;
 	private Image imagem;
@@ -17,12 +24,25 @@ public class Player {
 	private List <Tiro> tiros;
 	private boolean isVisivel;
 	
+	private static int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+	private static int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+	
 	public Player() {
 		this.x = 100;
 		this.y = 100;
 		isVisivel = true;
 		tiros = new ArrayList<Tiro>();
-	}
+		
+		try {
+            File soundFile = new File("src//res//tiro1.wav");
+            AudioInputStream audioIn = AudioSystem.getAudioInputStream(soundFile);
+            tiroSound = AudioSystem.getClip();
+            tiroSound.open(audioIn);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+	
 	
 	public void load() {
 		ImageIcon ref = new ImageIcon("src//res//spacenave1.png");
@@ -34,7 +54,20 @@ public class Player {
 	
 	public void update() {
 		x += dx;
+		
+		if (x < 0) {
+	        x = 0;
+	    } else if (x > screenWidth - largura) {
+	        x = screenWidth - largura;
+	    }
+
 		y += dy;
+
+	    if (y < 0) {
+	        y = 0;
+	    } else if (y > screenHeight - altura) {
+	        y = screenHeight - altura;
+	    }
 	}
 	
 	public Rectangle getBounds() {
@@ -43,6 +76,11 @@ public class Player {
 	
 	public void tiroSimples() {
 		this.tiros.add(new Tiro(x + largura, y + (altura/2)));
+		if (tiroSound != null) {
+			tiroSound.stop();
+	        tiroSound.setFramePosition(0); 
+	        tiroSound.start();  
+	    }
 	}
 	
 	public void teclaPress(KeyEvent tecla){

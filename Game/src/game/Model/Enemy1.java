@@ -12,7 +12,6 @@ public class Enemy1 {
 	private int largura, altura;
 	private boolean isVisible;
 	
-	//private static final int ALCANCE = 1000;
 	private static int VELOCIDADE = 2;
 	
 	public Enemy1(int x, int y) {
@@ -53,7 +52,7 @@ public class Enemy1 {
 	}
 
 	public static void setVELOCIDADE(int vELOCIDADE) {
-		VELOCIDADE = vELOCIDADE;
+		VELOCIDADE += vELOCIDADE;
 	}
 
 	public int getX() {
